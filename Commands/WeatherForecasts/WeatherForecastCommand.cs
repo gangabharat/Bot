@@ -1,26 +1,24 @@
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.Configuration;
+using Bot.WeatherForecasts;
 using Spectre.Console;
 using Spectre.Console.Cli;
+using Microsoft.Extensions.Logging;
 
-namespace Bot.WeatherForecasts;
+namespace Bot.Commands.WeatherForecasts;
 
 public class WeatherForecastCommand : Command<WeatherForecastSettings>
 {
-    private readonly IConfiguration _configuration;
-
+    private readonly ILogger<WeatherForecastCommand> _logger;
     private readonly WeatherForecastService _weatherForecastService;
-
-    public WeatherForecastCommand(IConfiguration configuration, WeatherForecastService weatherForecastService)
+    public WeatherForecastCommand(ILogger<WeatherForecastCommand> logger, WeatherForecastService weatherForecastService)
     {
-        _configuration = configuration;
+        _logger = logger;
         _weatherForecastService = weatherForecastService;
     }
 
     public override int Execute([NotNull] CommandContext context, [NotNull] WeatherForecastSettings settings)
     {
-        var unit = settings.Unit ?? 
-                   _configuration.GetValue<TemperatureUnit>("Unit");
+        var unit = settings.Unit;
 
         var forecasts = _weatherForecastService.GetForecasts(settings.Count);
 
@@ -45,7 +43,6 @@ public class WeatherForecastCommand : Command<WeatherForecastSettings>
         table.Expand();
 
         AnsiConsole.Write(table);
-
         return 0;
     }
 }

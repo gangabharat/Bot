@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using Spectre.Console.Cli;
 
-namespace Bot.WeatherForecasts;
+namespace Bot.Commands.WeatherForecasts;
 
 public class WeatherForecastSettings : CommandSettings
 {

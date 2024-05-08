@@ -1,0 +1,27 @@
+{
+  "profiles": {
+    "Bot": {
+      "commandName": "Project"
+    },
+    "forecasts": {
+      "commandName": "Project",
+      "commandLineArgs": "forecasts 25"
+    },
+    "html2pdf": {
+      "commandName": "Project",
+      "commandLineArgs": "html2pdf \"d:\\download\" \"d:\\download\""
+    },
+    "download": {
+      "commandName": "Project",
+      "commandLineArgs": "download -i \"d:\\download\" -s *.txt -b 5"
+    },
+    "encrypt": {
+      "commandName": "Project",
+      "commandLineArgs": "encrypt -i \"d:\\download\" -s * -k 7YuOWjFg78vuP9m8"
+    },
+    "decrypt": {
+      "commandName": "Project",
+      "commandLineArgs": "decrypt -s *.bot -k 7YuOWjFg78vuP9m8"
+    }
+  }
+}

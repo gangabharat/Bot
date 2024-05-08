@@ -1,4 +1,4 @@
-namespace Bot.WeatherForecasts;
+namespace Bot.Commands.WeatherForecasts;
 
 public enum TemperatureUnit
 {
