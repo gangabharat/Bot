@@ -9,14 +9,14 @@ namespace Bot.Commands.Download
         private readonly ILogger<DownloadService> _logger;
         private readonly IEmailService email;
 
-        public DownloadService(ILogger<DownloadService> logger ,HttpClientService httpClient, IEmailService email) 
+        public DownloadService(ILogger<DownloadService> logger ,IHttpClientService httpClient, IEmailService email) 
         {
             _logger = logger;
             HttpClient = httpClient;
             this.email = email;
         }
 
-        public HttpClientService HttpClient { get; }
+        public IHttpClientService HttpClient { get; }
 
         //public DownloadService(Logger<BaseService> log, IConfiguration configuration, 
         //    TwilioService twilioService, EmailService emailService, 

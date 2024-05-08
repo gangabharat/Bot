@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bot.WeatherForecasts;
 
-public class WeatherForecastService : BaseService
+public class WeatherForecastService : BaseService<WeatherForecastService>
 {
     private static readonly string[] Summaries = new[]
     {
@@ -13,22 +13,21 @@ public class WeatherForecastService : BaseService
         "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly ILogger _logger;
-
-    public WeatherForecastService(IConfiguration configuration, ILogger<WeatherForecastService> logger) : base(configuration)
+    public WeatherForecastService(IConfiguration configuration, ILogger<WeatherForecastService> logger) 
+        : base(configuration, logger)
     {
-        _logger = logger;
+       
     }
 
     public IEnumerable<WeatherForecast> GetForecasts(int count)
     {
-        //now
+
+        //Options.
         var config = Configuration;
 
-        _logger.LogTrace("user gmail {0} password {1}", Options?.Smtp?.UserName, Options?.Smtp?.Password);
-        //var option = Options.Encrypt.SecretKey.;
-        _logger.LogInformation("Getting {count} forecasts.", count);
-        //Configuration.
+        Logger.LogTrace("user gmail {0} password {1}", Options?.Smtp?.UserName, Options?.Smtp?.Password);
+
+        Logger.LogInformation("Getting {count} forecasts.", count);
         var rng = new Random();
 
         var forecasts = Enumerable.Range(1, count).Select(index =>

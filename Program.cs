@@ -21,20 +21,23 @@ AnsiConsole.WriteLine();
 
 var builder = Host.CreateDefaultBuilder(args);
 
+#region "Microsoft UserSecrets override appsettings"
 //Read from UserSecrets 
 builder.ConfigureAppConfiguration(app =>
 {
     app.AddUserSecrets<Program>();
 });
+#endregion
 
-
+#region "Serilog configuratrion & read from appsettings"
 //UseSerilog configuratrion & read from appsettings
 builder.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
 });
+#endregion
 
-#region Dependancy Services
+#region "Dependancy Services"
 // Add services to the container
 builder.ConfigureServices(services =>
 {
@@ -60,9 +63,10 @@ builder.ConfigureServices(services =>
 });
 #endregion
 
+#region "Register Commands"
 var registrar = new TypeRegistrar(builder);
-
 var app = new CommandApp(registrar);
+
 
 app.Configure(config =>
 {
@@ -88,9 +92,12 @@ app.Configure(config =>
     .WithExample(new[] { "decrypt", "sourcePath", "destinationPath" });
 
 });
+#endregion
 
 return app.Run(args);
 
+
+#region "HttpClientFactory RetryPolicy"
 //retry Policy for httpclientFactory
 static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 {
@@ -99,3 +106,4 @@ static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
         .OrResult(response => response.StatusCode == System.Net.HttpStatusCode.NotFound) // Example additional condition
         .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(3, retryAttempt)));
 }
+#endregion
