@@ -25,7 +25,7 @@ public class WeatherForecastService : BaseService<WeatherForecastService>
         //Options.
         var config = Configuration;
 
-        Logger.LogTrace("user gmail {0} password {1}", Options?.Smtp?.UserName, Options?.Smtp?.Password);
+        Logger.LogTrace("user gmail {userName} password {Password}", Options?.Smtp?.UserName, Options?.Smtp?.Password);
 
         Logger.LogInformation("Getting {count} forecasts.", count);
         var rng = new Random();
